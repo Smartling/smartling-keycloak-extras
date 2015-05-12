@@ -1,0 +1,19 @@
+machine:
+  environment:
+    LANG: en_US.UTF-8
+  java:
+    version: oraclejdk7
+
+test:
+  override:
+    - ./gradlew test
+
+deployment:
+  snapshot:
+    branch: develop
+    commands:
+            - ./gradlew clean
+  release:
+    branch: master
+    commands:
+      - ./gradlew -Prelease=true clean bintrayUpload

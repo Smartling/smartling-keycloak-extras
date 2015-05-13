@@ -16,4 +16,5 @@ deployment:
   release:
     branch: master
     commands:
-      - ./gradlew -Prelease=true clean bintrayUpload
+      - rm -f gradle.properties
+      - ./gradlew -Prelease=true -PbintrayUser=${BINTRAY_API_KEY} -PbintrayKey=${BINTRAY_USER} clean bintrayUpload

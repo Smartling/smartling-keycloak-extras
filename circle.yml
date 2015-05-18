@@ -4,6 +4,13 @@ machine:
   java:
     version: oraclejdk7
 
+dependencies:
+  cache_directories:
+    - keycloak-1.2.1.Smartling-SNAPSHOT
+    - ../.gradle/wrapper/dists
+  pre:
+    - bash ./install-keycloak.sh
+
 test:
   override:
     - ./gradlew test
@@ -12,7 +19,7 @@ deployment:
   snapshot:
     branch: develop
     commands:
-            - ./gradlew clean
+      - ./gradlew clean
   release:
     branch: master
     commands:

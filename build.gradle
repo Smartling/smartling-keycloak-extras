@@ -22,6 +22,7 @@ buildscript {
     }
     dependencies {
         classpath "com.netflix.nebula:nebula-project-plugin:2.2.+"
+        classpath "com.netflix.nebula:gradle-extra-configurations-plugin:2.2.+"
         classpath "com.netflix.nebula:nebula-bintray-plugin:2.2.+"
     }
 }
@@ -42,6 +43,7 @@ project('keycloak-spring-security-auth') {
 
 subprojects {
     apply plugin: "nebula.nebula-project"
+    apply plugin: "provided-base"
     apply plugin: "nebula.nebula-bintray"
     apply plugin: 'java'
 
@@ -60,6 +62,10 @@ subprojects {
     dependencies {
         compile "org.slf4j:slf4j-api:1.7.7"
         compile "org.keycloak:keycloak-spring-security-adapter:${keycloakVersion}"
+        provided "javax.servlet:javax.servlet-api:3.0.1"
+
+        testRuntime "org.jboss.logging:jboss-logging:3.2.1.Final"
+        testRuntime "com.fasterxml.jackson.core:jackson-databind:2.5.3"
 
         testCompile 'junit:junit:4.12'
         testCompile 'org.mockito:mockito-all:1.10.19'

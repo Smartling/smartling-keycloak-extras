@@ -17,6 +17,7 @@
 package org.keycloak.adapters.springsecurity.authentication;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.keycloak.adapters.springsecurity.config.AppConfig;
@@ -47,6 +48,7 @@ public class DirectAccessGrantAuthenticationProviderTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    @Ignore
     @Test
     public void testAuthenticate() throws Exception {
         DirectAccessGrantToken token = new DirectAccessGrantToken(AppConfig.KNOWN_USERNAME, AppConfig.KNOWN_PASSWORD);

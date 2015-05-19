@@ -16,6 +16,7 @@
 
 package org.keycloak.adapters.springsecurity.service;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
@@ -39,6 +40,7 @@ public class KeycloakDirectAccessGrantServiceTest {
     @Autowired
     private KeycloakDirectAccessGrantService service;
 
+    @Ignore
     @Test
     public void testLogin() throws Exception {
         RefreshableKeycloakSecurityContext securityContext =  service.login(AppConfig.KNOWN_USERNAME, AppConfig.KNOWN_PASSWORD);

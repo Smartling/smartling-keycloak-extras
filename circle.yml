@@ -6,10 +6,7 @@ machine:
 
 dependencies:
   cache_directories:
-    - keycloak-1.2.1.Smartling-SNAPSHOT
     - ../.gradle/wrapper/dists
-  pre:
-    - bash ./install-keycloak.sh
 
 test:
   override:

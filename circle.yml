@@ -4,15 +4,22 @@ machine:
   java:
     version: oraclejdk7
 
+dependencies:
+  cache_directories:
+    - ../.gradle/wrapper/dists
+
 test:
   override:
     - ./gradlew test
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
 
 deployment:
   snapshot:
     branch: develop
     commands:
-            - ./gradlew clean
+      - ./gradlew clean
   release:
     branch: master
     commands:

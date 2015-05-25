@@ -18,7 +18,7 @@ principal to be loaded from a Spring Security user detail service.
 <dependency>
 	<groupId>com.smartling.keycloak.extras</groupId>
 	<artifactId>keycloak-spring-security-auth</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>${version}</version>
 </dependency>
 ```
 

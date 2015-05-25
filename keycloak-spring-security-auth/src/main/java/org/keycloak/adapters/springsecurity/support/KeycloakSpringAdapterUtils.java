@@ -30,9 +30,13 @@ import org.keycloak.jose.jws.JWSInput;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.IDToken;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.util.Assert;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -120,6 +124,23 @@ public final class KeycloakSpringAdapterUtils {
 
         // FIXME: does it make sense to pass null for the token store?
         return new RefreshableKeycloakSecurityContext(deployment, null, tokenString, accessToken, idTokenString, idToken, accessTokenResponse.getRefreshToken());
+    }
+
+    /**
+     * Prepares the given {@link RestTemplate} for use with Keycloak annotated DTOs.
+     * Registers Jackson 1.9.x message converter in case 2.x is on the classpath.
+     *
+     * @param template the <code>RestTemplate</code> to prepare
+     */
+    public static void prepareRestTemplate(RestTemplate template) {
+        Assert.notNull(template, "RestTemplate required");
+        for (HttpMessageConverter converter : template.getMessageConverters()) {
+            if (converter instanceof MappingJackson2HttpMessageConverter) {
+                template.getMessageConverters().remove(converter);
+                template.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                break;
+            }
+        }
     }
 
     private KeycloakSpringAdapterUtils() { }

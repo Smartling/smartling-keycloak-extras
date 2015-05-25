@@ -69,6 +69,7 @@ subprojects {
 
         testCompile 'junit:junit:4.12'
         testCompile 'org.mockito:mockito-all:1.10.19'
+        testCompile 'org.powermock:powermock-mockito-release-full:1.6.2'
         testCompile "org.springframework:spring-test:${springVersion}"
     }
 

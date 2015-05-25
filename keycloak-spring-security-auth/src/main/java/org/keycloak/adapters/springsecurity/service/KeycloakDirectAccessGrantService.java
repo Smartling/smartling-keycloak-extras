@@ -17,16 +17,13 @@
 package org.keycloak.adapters.springsecurity.service;
 
 import org.keycloak.OAuth2Constants;
-import org.keycloak.RSATokenVerifier;
 import org.keycloak.VerificationException;
 import org.keycloak.adapters.KeycloakDeployment;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.AdapterDeploymentContextBean;
 import org.keycloak.adapters.springsecurity.service.context.KeycloakConfidentialClientRequestFactory;
-import org.keycloak.jose.jws.JWSInput;
-import org.keycloak.representations.AccessToken;
+import org.keycloak.adapters.springsecurity.support.KeycloakSpringAdapterUtils;
 import org.keycloak.representations.AccessTokenResponse;
-import org.keycloak.representations.IDToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -40,7 +37,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -90,22 +86,7 @@ public class KeycloakDirectAccessGrantService implements DirectAccessGrantServic
 
         AccessTokenResponse response = template.postForObject(deployment.getTokenUrl(), new HttpEntity<>(body, headers), AccessTokenResponse.class);
 
-        return createContext(response);
+        return KeycloakSpringAdapterUtils.createKeycloakSecurityContext(deployment, response);
     }
 
-    protected RefreshableKeycloakSecurityContext createContext(AccessTokenResponse response) throws VerificationException {
-        String tokenString = response.getToken();
-        String idTokenString = response.getIdToken();
-        AccessToken accessToken = RSATokenVerifier.verifyToken(tokenString, deployment.getRealmKey(), deployment.getRealmInfoUrl());
-        IDToken idToken;
-
-        JWSInput input = new JWSInput(idTokenString);
-        try {
-            idToken = input.readJsonContent(IDToken.class);
-        } catch (IOException e) {
-            throw new VerificationException("Unable to verify ID token", e);
-        }
-
-        return new RefreshableKeycloakSecurityContext(deployment, null, tokenString, accessToken, idTokenString, idToken, response.getRefreshToken());
-    }
 }

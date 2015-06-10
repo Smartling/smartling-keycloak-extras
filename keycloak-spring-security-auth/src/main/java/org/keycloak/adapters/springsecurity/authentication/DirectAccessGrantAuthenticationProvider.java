@@ -25,6 +25,7 @@ import org.keycloak.adapters.springsecurity.support.KeycloakSpringAdapterUtils;
 import org.keycloak.adapters.springsecurity.token.DirectAccessGrantToken;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -33,6 +34,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
@@ -57,7 +59,7 @@ public class DirectAccessGrantAuthenticationProvider implements AuthenticationPr
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = (String) authentication.getPrincipal();
+        String username = resolveUsername(authentication.getPrincipal());
         String password = (String) authentication.getCredentials();
         KeycloakDeployment deployment = adapterDeploymentContextBean.getDeployment();
         RefreshableKeycloakSecurityContext context;
@@ -75,6 +77,24 @@ public class DirectAccessGrantAuthenticationProvider implements AuthenticationPr
         }
 
         return token;
+    }
+
+    /**
+     * Returns the username for the given principal.
+     *
+     * @param principal the principal to authenticate
+     * @return the username from the given <code>principal</code>
+     * @throws AuthenticationCredentialsNotFoundException if the username cannot be resolved
+     */
+    protected String resolveUsername(Object principal) {
+
+        if (principal instanceof String)
+            return (String) principal;
+
+        if (principal instanceof UserDetails)
+            return ((UserDetails)principal).getUsername();
+
+        throw new AuthenticationCredentialsNotFoundException("Can't find username on: " + principal);
     }
 
     @Override

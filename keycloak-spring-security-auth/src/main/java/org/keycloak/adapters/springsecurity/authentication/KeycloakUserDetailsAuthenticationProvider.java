@@ -36,14 +36,13 @@ import java.security.Principal;
  * The supplied {@link UserDetailsService user details service} is consulted using the Keycloak
  * access token's email as the username.
  * </p>
- * <p>
- *     The original Keycloak principal is available from the {@link KeycloakAuthenticationToken}:
+ *
+ * The original Keycloak principal is available from the {@link KeycloakAuthenticationToken}:
  *     <pre>
  *          KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) SecurityContextHolder.getContext().getAuthentication());
  *          KeycloakAccount account = token.getAccount();
  *          Principal = account.getPrincipal();
  *     </pre>
- * </p>
  *
  * @author <a href="mailto:srossillo@smartling.com">Scott Rossillo</a>
  *

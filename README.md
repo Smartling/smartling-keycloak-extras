@@ -18,25 +18,15 @@ principal to be loaded from a Spring Security user detail service.
 <dependency>
 	<groupId>com.smartling.keycloak.extras</groupId>
 	<artifactId>keycloak-spring-security-auth</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>${version}</version>
 </dependency>
 ```
 
 ## Using Smartling Keycloak Extras
 
-Until the extracts are included in JCenter, add the Smrartling OSS [release repository][repo]
-to your build:
+Smartling Keycloak Extras are now distributed via [JCenter]. Simply add JCenter as repository in your build.
+to your build.
 
-```
-<repositories>
-	<repository>
-		<id>smartling-oss-release</id>
-		<url>https://dl.bintray.com/smartling/release</url>
-		<releases><enabled>true</enabled></releases>
-		<snapshots><enabled>false</enabled></snapshots>
-	</repository>
-</repositories>
-```
-
+[jcenter]: https://bintray.com/bintray/jcenter
 [keycloak]: http://keycloak.org
 [repo]: https://dl.bintray.com/smartling/release

@@ -29,7 +29,7 @@ buildscript {
 
 group = 'com.smartling.keycloak.extras'
 description = 'Smartling Keycloak Extras'
-version = '0.4.0' + (project.hasProperty('release') && project.ext.release ? '-RELEASE' : '-SNAPSHOT')
+version = '0.5.0' + (project.hasProperty('release') && project.ext.release ? '-RELEASE' : '-SNAPSHOT')
 
 ext {
     springVersion = '3.2.6.RELEASE'

@@ -7,10 +7,15 @@ These project may add auxiliary behavior or have yet to be merged into the Keycl
 
 ### Keycloak Spring Security Authentication
 
+Provides an extension to Keycloak's Spring Security adapter that enables the authentication
+via direct access grants.
+
+### Keycloak Spring Security User Details
+
 Provides an extension to Keycloak's Spring Security adapter that enables the authenticated
 principal to be loaded from a Spring Security user detail service.
 
-#### Usage
+### Usage
 
 [ ![Download](https://api.bintray.com/packages/smartling/release/keycloak-spring-security-auth/images/download.svg) ](https://bintray.com/smartling/release/keycloak-spring-security-auth/_latestVersion)
 
@@ -20,6 +25,13 @@ principal to be loaded from a Spring Security user detail service.
 	<artifactId>keycloak-spring-security-auth</artifactId>
 	<version>${version}</version>
 </dependency>
+
+<dependency>
+	<groupId>com.smartling.keycloak.extras</groupId>
+	<artifactId>keycloak-spring-security-user-details</artifactId>
+	<version>${version}</version>
+</dependency>
+
 ```
 
 ## Using Smartling Keycloak Extras

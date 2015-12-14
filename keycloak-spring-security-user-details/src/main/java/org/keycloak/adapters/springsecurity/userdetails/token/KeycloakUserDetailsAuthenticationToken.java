@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.keycloak.adapters.springsecurity.token;
+package org.keycloak.adapters.springsecurity.userdetails.token;
 
 import org.keycloak.adapters.KeycloakAccount;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
@@ -28,7 +29,8 @@ import java.util.Collection;
  *
  * @author <a href="mailto:srossillo@smartling.com">Scott Rossillo</a>
  */
-public class KeycloakUserDetailsAuthenticationToken extends KeycloakAuthenticationToken {
+public class KeycloakUserDetailsAuthenticationToken extends KeycloakAuthenticationToken
+{
 
     private UserDetails userDetails;
 

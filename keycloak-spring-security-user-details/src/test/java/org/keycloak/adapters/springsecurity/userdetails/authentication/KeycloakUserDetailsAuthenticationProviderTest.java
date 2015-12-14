@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.keycloak.adapters.springsecurity.authentication;
+package org.keycloak.adapters.springsecurity.userdetails.authentication;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.keycloak.adapters.KeycloakAccount;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.adapters.springsecurity.token.KeycloakUserDetailsAuthenticationToken;
+import org.keycloak.adapters.springsecurity.userdetails.token.KeycloakUserDetailsAuthenticationToken;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

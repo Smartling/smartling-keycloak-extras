@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package org.keycloak.adapters.springsecurity.authentication;
+package org.keycloak.adapters.springsecurity.userdetails.authentication;
 
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.KeycloakAccount;
+import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.adapters.springsecurity.token.KeycloakUserDetailsAuthenticationToken;
+import org.keycloak.adapters.springsecurity.userdetails.token.KeycloakUserDetailsAuthenticationToken;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.keycloak.adapters.springsecurity.authentication;
+package org.keycloak.adapters.springsecurity.userdetails.authentication;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.keycloak.adapters.springsecurity.config.AppConfig;
+import org.keycloak.adapters.springsecurity.userdetails.config.AppConfig;
 import org.keycloak.adapters.springsecurity.token.DirectAccessGrantToken;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;

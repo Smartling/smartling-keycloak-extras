@@ -17,4 +17,5 @@
 rootProject.name = 'smartling-keycloak-extras'
 
 include 'keycloak-spring-security-auth'
+include 'keycloak-spring-security-user-details'
 //include 'spring-boot-starter-keycloak'

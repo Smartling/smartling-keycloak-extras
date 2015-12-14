@@ -17,7 +17,6 @@
 package org.keycloak.adapters.springsecurity.filter;
 
 import org.keycloak.adapters.springsecurity.authentication.DirectAccessGrantAuthenticationProvider;
-import org.keycloak.adapters.springsecurity.authentication.DirectAccessGrantUserDetailsAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.token.DirectAccessGrantToken;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -34,7 +33,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author <a href="mailto:srossillo@smartling.com">Scott Rossillo</a>
  *
  * @see DirectAccessGrantAuthenticationProvider
- * @see DirectAccessGrantUserDetailsAuthenticationProvider
  * @see UsernamePasswordAuthenticationFilter
  */
 public class DirectAccessGrantLoginFilter extends UsernamePasswordAuthenticationFilter {

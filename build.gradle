@@ -113,6 +113,12 @@ subprojects {
     }
 }
 
+project('keycloak-spring-security-user-details') {
+    description = "Keycloak Spring Security User Details Authentication Extras"
+    dependencies {
+        compile project(':keycloak-spring-security-auth')
+    }
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2'

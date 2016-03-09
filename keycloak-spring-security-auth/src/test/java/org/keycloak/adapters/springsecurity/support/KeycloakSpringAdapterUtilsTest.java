@@ -21,8 +21,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.AdapterUtils;
-import org.keycloak.adapters.KeycloakAccount;
 import org.keycloak.adapters.KeycloakDeployment;
+import org.keycloak.adapters.OidcKeycloakAccount;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.account.KeycloakRole;
 import org.mockito.Mock;
@@ -81,7 +81,7 @@ public class KeycloakSpringAdapterUtilsTest {
 
     @Test
     public void testCreateAccount() throws Exception {
-        KeycloakAccount account = KeycloakSpringAdapterUtils.createAccount(deployment, context);
+        OidcKeycloakAccount account = KeycloakSpringAdapterUtils.createAccount(deployment, context);
         assertNotNull(account);
         assertEquals(principal, account.getPrincipal());
         assertEquals(context, account.getKeycloakSecurityContext());

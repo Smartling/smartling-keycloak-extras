@@ -16,14 +16,19 @@
 
 package org.keycloak.adapters.springsecurity.config;
 
-import org.keycloak.adapters.springsecurity.AdapterDeploymentContextBean;
+import org.keycloak.adapters.KeycloakDeployment;
+import org.keycloak.adapters.KeycloakDeploymentBuilder;
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
 import org.keycloak.adapters.springsecurity.authentication.DirectAccessGrantAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.service.DirectAccessGrantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+
+import java.io.IOException;
 
 /**
  * Spring integration test application configuration.
@@ -40,14 +45,15 @@ public class AppConfig {
     protected DirectAccessGrantService directAccessGrantService;
 
     @Bean
-    AdapterDeploymentContextBean adapterDeploymentContextBean() {
-        return new AdapterDeploymentContextBean();
+    KeycloakDeployment keycloakDeployment(@Value("${keycloak.configurationFile:WEB-INF/keycloak.json}") Resource keycloakConfigFileResource) throws IOException
+    {
+        return KeycloakDeploymentBuilder.build(keycloakConfigFileResource.getInputStream());
     }
 
     @Bean
-    DirectAccessGrantAuthenticationProvider directAccessGrantAuthenticationProvider() {
+    DirectAccessGrantAuthenticationProvider directAccessGrantAuthenticationProvider()
+    {
         DirectAccessGrantAuthenticationProvider provider = new DirectAccessGrantAuthenticationProvider();
-        provider.setAdapterDeploymentContextBean(adapterDeploymentContextBean());
         provider.setDirectAccessGrantService(directAccessGrantService);
         return provider;
     }

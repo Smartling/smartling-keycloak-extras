@@ -17,7 +17,7 @@
 package org.keycloak.adapters.springsecurity.userdetails.authentication;
 
 import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.KeycloakAccount;
+import org.keycloak.adapters.OidcKeycloakAccount;
 import org.keycloak.adapters.springsecurity.authentication.DirectAccessGrantAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.adapters.springsecurity.userdetails.token.KeycloakUserDetailsAuthenticationToken;
@@ -85,13 +85,13 @@ public class DirectAccessGrantUserDetailsAuthenticationProvider extends DirectAc
      * @return the username to use when loading a user from the this provider's {@link UserDetailsService}.
      *
      * @see UserDetailsService#loadUserByUsername
-     * @see KeycloakAccount#getPrincipal
+     * @see OidcKeycloakAccount#getPrincipal
      */
     protected String resolveUsername(KeycloakAuthenticationToken token) {
 
         Assert.notNull(token, "KeycloakAuthenticationToken required");
         Assert.notNull(token.getAccount(), "KeycloakAuthenticationToken.getAccount() cannot be return null");
-        KeycloakAccount account = token.getAccount();
+        OidcKeycloakAccount account = token.getAccount();
         Principal principal = account.getPrincipal();
 
         return principal.getName();

@@ -20,7 +20,6 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClients;
 import org.keycloak.adapters.KeycloakDeployment;
-import org.keycloak.adapters.springsecurity.AdapterDeploymentContextBean;
 import org.keycloak.util.BasicAuthHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -39,7 +38,7 @@ public class KeycloakConfidentialClientRequestFactory extends HttpComponentsClie
         ClientHttpRequestFactory {
 
     @Autowired
-    private AdapterDeploymentContextBean adapterDeploymentContextBean;
+    private KeycloakDeployment keycloakDeployment;
 
     /**
      * Creates a new Keycloak confidential client request factory.
@@ -60,11 +59,10 @@ public class KeycloakConfidentialClientRequestFactory extends HttpComponentsClie
      * @return an HTTP Basic authentication header for the current client
      */
     protected String createBasicAuthorizationHeader() {
-        KeycloakDeployment deployment = adapterDeploymentContextBean.getDeployment();
-        String user = deployment.getResourceName();
-        String pass = deployment.getResourceCredentials().get("secret");
+        String user = keycloakDeployment.getResourceName();
+        String pass = keycloakDeployment.getResourceCredentials().get("secret").toString();
 
-        if (deployment.isPublicClient()) {
+        if (keycloakDeployment.isPublicClient()) {
             throw new IllegalStateException("Public clients are not supported");
         }
 

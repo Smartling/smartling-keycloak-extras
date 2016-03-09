@@ -17,12 +17,11 @@
 package org.keycloak.adapters.springsecurity.service;
 
 import org.keycloak.OAuth2Constants;
-import org.keycloak.VerificationException;
 import org.keycloak.adapters.KeycloakDeployment;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.AdapterDeploymentContextBean;
 import org.keycloak.adapters.springsecurity.service.context.KeycloakConfidentialClientRequestFactory;
 import org.keycloak.adapters.springsecurity.support.KeycloakSpringAdapterUtils;
+import org.keycloak.common.VerificationException;
 import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -46,19 +45,16 @@ import java.util.Arrays;
 public class KeycloakDirectAccessGrantService implements DirectAccessGrantService {
 
     @Autowired
-    private AdapterDeploymentContextBean adapterDeploymentContextBean;
+    private KeycloakDeployment keycloakDeployment;
 
     @Autowired
     private KeycloakConfidentialClientRequestFactory requestFactory;
 
-    private KeycloakDeployment deployment;
     protected RestTemplate template;
 
     @PostConstruct
     public void init() {
-        deployment = adapterDeploymentContextBean.getDeployment();
         template = new RestTemplate(requestFactory);
-        KeycloakSpringAdapterUtils.prepareRestTemplate(template);
     }
 
     @Override
@@ -73,9 +69,9 @@ public class KeycloakDirectAccessGrantService implements DirectAccessGrantServic
         body.set("password", password);
         body.set(OAuth2Constants.GRANT_TYPE, OAuth2Constants.PASSWORD);
 
-        AccessTokenResponse response = template.postForObject(deployment.getTokenUrl(), new HttpEntity<>(body, headers), AccessTokenResponse.class);
+        AccessTokenResponse response = template.postForObject(keycloakDeployment.getTokenUrl(), new HttpEntity<>(body, headers), AccessTokenResponse.class);
 
-        return KeycloakSpringAdapterUtils.createKeycloakSecurityContext(deployment, response);
+        return KeycloakSpringAdapterUtils.createKeycloakSecurityContext(keycloakDeployment, response);
     }
 
 }

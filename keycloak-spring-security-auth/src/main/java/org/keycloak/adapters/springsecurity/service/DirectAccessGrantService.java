@@ -16,8 +16,8 @@
 
 package org.keycloak.adapters.springsecurity.service;
 
-import org.keycloak.VerificationException;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
+import org.keycloak.common.VerificationException;
 
 /**
  * Provides an OAuth2 resource owner password credentials grant for clients
@@ -39,7 +39,6 @@ public interface DirectAccessGrantService {
      * @param username to username to authenticate
      * @param password the password for the given <code>username</code>
      * @return an authenticated <code>RefreshableKeycloakSecurityContext</code> if login succeeds
-     * @throws VerificationException if the <code>username</code> and <code>password</code> combination
      * are incorrect
      */
     RefreshableKeycloakSecurityContext login(String username, String password) throws VerificationException;

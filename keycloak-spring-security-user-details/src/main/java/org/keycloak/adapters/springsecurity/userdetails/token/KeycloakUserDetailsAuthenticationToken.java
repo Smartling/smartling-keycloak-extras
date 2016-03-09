@@ -16,7 +16,7 @@
 
 package org.keycloak.adapters.springsecurity.userdetails.token;
 
-import org.keycloak.adapters.KeycloakAccount;
+import org.keycloak.adapters.OidcKeycloakAccount;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,7 +34,7 @@ public class KeycloakUserDetailsAuthenticationToken extends KeycloakAuthenticati
 
     private UserDetails userDetails;
 
-    public KeycloakUserDetailsAuthenticationToken(UserDetails userDetails, KeycloakAccount account,
+    public KeycloakUserDetailsAuthenticationToken(UserDetails userDetails, OidcKeycloakAccount account,
             Collection<? extends GrantedAuthority> authorities) {
         super(account, authorities);
         Assert.notNull(userDetails, "UserDetails required");

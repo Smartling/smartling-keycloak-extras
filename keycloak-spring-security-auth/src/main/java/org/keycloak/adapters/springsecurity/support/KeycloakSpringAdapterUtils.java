@@ -19,25 +19,22 @@ package org.keycloak.adapters.springsecurity.support;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.RSATokenVerifier;
-import org.keycloak.VerificationException;
 import org.keycloak.adapters.AdapterUtils;
-import org.keycloak.adapters.KeycloakAccount;
 import org.keycloak.adapters.KeycloakDeployment;
+import org.keycloak.adapters.OidcKeycloakAccount;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.account.KeycloakRole;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
+import org.keycloak.common.VerificationException;
 import org.keycloak.jose.jws.JWSInput;
+import org.keycloak.jose.jws.JWSInputException;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.IDToken;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.util.Assert;
-import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -52,14 +49,14 @@ import java.util.Set;
 public final class KeycloakSpringAdapterUtils {
 
     /**
-     * Creates a {@link KeycloakAccount} from the given {@link KeycloakDeployment} and {@link RefreshableKeycloakSecurityContext}.
+     * Creates a {@link OidcKeycloakAccount} from the given {@link KeycloakDeployment} and {@link RefreshableKeycloakSecurityContext}.
      *
      * @param deployment the <code>KeycloakDeployment</code> requesting an account (required)
      * @param context the current <code>RefreshableKeycloakSecurityContext</code> (required)
      *
      * @return a <code>KeycloakAccount</code> for the given <code>deployment</code> and <code>context</code>
      */
-    public static KeycloakAccount createAccount(KeycloakDeployment deployment, RefreshableKeycloakSecurityContext context) {
+    public static OidcKeycloakAccount createAccount(KeycloakDeployment deployment, RefreshableKeycloakSecurityContext context) {
         Assert.notNull(context);
         Set<String> roles = AdapterUtils.getRolesFromSecurityContext(context);
         KeycloakPrincipal<RefreshableKeycloakSecurityContext> principal = AdapterUtils.createPrincipal(deployment, context);
@@ -114,32 +111,15 @@ public final class KeycloakSpringAdapterUtils {
                 .verifyToken(tokenString, deployment.getRealmKey(), deployment.getRealmInfoUrl());
         IDToken idToken;
 
-        JWSInput input = new JWSInput(idTokenString);
         try {
+            JWSInput input = new JWSInput(idTokenString);
             idToken = input.readJsonContent(IDToken.class);
-        } catch (IOException e) {
+        } catch (JWSInputException e) {
             throw new VerificationException("Unable to verify ID token", e);
         }
 
         // FIXME: does it make sense to pass null for the token store?
         return new RefreshableKeycloakSecurityContext(deployment, null, tokenString, accessToken, idTokenString, idToken, accessTokenResponse.getRefreshToken());
-    }
-
-    /**
-     * Prepares the given {@link RestTemplate} for use with Keycloak annotated DTOs.
-     * Registers Jackson 1.9.x message converter in case 2.x is on the classpath.
-     *
-     * @param template the <code>RestTemplate</code> to prepare
-     */
-    public static void prepareRestTemplate(RestTemplate template) {
-        Assert.notNull(template, "RestTemplate required");
-        for (HttpMessageConverter converter : template.getMessageConverters()) {
-            if (converter instanceof MappingJackson2HttpMessageConverter) {
-                template.getMessageConverters().remove(converter);
-                template.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-                break;
-            }
-        }
     }
 
     private KeycloakSpringAdapterUtils() { }

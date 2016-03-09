@@ -18,7 +18,7 @@ package org.keycloak.adapters.springsecurity.userdetails.authentication;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.keycloak.adapters.KeycloakAccount;
+import org.keycloak.adapters.OidcKeycloakAccount;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.adapters.springsecurity.userdetails.token.KeycloakUserDetailsAuthenticationToken;
 import org.mockito.Mock;
@@ -54,7 +54,7 @@ public class KeycloakUserDetailsAuthenticationProviderTest {
     private User user;
     
     @Mock
-    private KeycloakAccount account;
+    private OidcKeycloakAccount account;
 
     @Mock
     private Principal principal;

@@ -29,12 +29,12 @@ buildscript {
 
 group = 'com.smartling.keycloak.extras'
 description = 'Smartling Keycloak Extras'
-version = '0.5.0' + (project.hasProperty('release') && project.ext.release ? '-RELEASE' : '-SNAPSHOT')
+version = '0.6.0' + (project.hasProperty('release') && project.ext.release ? '-RELEASE' : '-SNAPSHOT')
 
 ext {
     springVersion = '3.2.6.RELEASE'
     springSecurityVersion = '3.2.0.RELEASE'
-    keycloakVersion = '1.2.1.Smartling-SNAPSHOT'
+    keycloakVersion = '1.9.0.Final'
 }
 
 project('keycloak-spring-security-auth') {

@@ -16,14 +16,13 @@
 
 package org.keycloak.adapters.springsecurity.authentication;
 
-import org.keycloak.VerificationException;
 import org.keycloak.adapters.KeycloakDeployment;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.AdapterDeploymentContextBean;
 import org.keycloak.adapters.springsecurity.service.DirectAccessGrantService;
 import org.keycloak.adapters.springsecurity.support.KeycloakSpringAdapterUtils;
 import org.keycloak.adapters.springsecurity.token.DirectAccessGrantToken;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.keycloak.common.VerificationException;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -53,7 +52,7 @@ import java.util.Collection;
  */
 public class DirectAccessGrantAuthenticationProvider implements AuthenticationProvider {
 
-    private AdapterDeploymentContextBean adapterDeploymentContextBean;
+    private KeycloakDeployment keycloakDeployment;
     private DirectAccessGrantService directAccessGrantService;
     private GrantedAuthoritiesMapper grantedAuthoritiesMapper = null;
 
@@ -61,7 +60,6 @@ public class DirectAccessGrantAuthenticationProvider implements AuthenticationPr
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = resolveUsername(authentication.getPrincipal());
         String password = (String) authentication.getCredentials();
-        KeycloakDeployment deployment = adapterDeploymentContextBean.getDeployment();
         RefreshableKeycloakSecurityContext context;
         KeycloakAuthenticationToken token;
         Collection<? extends GrantedAuthority> authorities;
@@ -69,7 +67,7 @@ public class DirectAccessGrantAuthenticationProvider implements AuthenticationPr
         try {
             context = directAccessGrantService.login(username, password);
             authorities = KeycloakSpringAdapterUtils.createGrantedAuthorities(context, grantedAuthoritiesMapper);
-            token = new KeycloakAuthenticationToken(KeycloakSpringAdapterUtils.createAccount(deployment, context), authorities);
+            token = new KeycloakAuthenticationToken(KeycloakSpringAdapterUtils.createAccount(keycloakDeployment, context), authorities);
         } catch (VerificationException e) {
             throw new BadCredentialsException("Unable to validate token", e);
         } catch (Exception e) {
@@ -104,8 +102,9 @@ public class DirectAccessGrantAuthenticationProvider implements AuthenticationPr
     }
 
     @Required
-    public void setAdapterDeploymentContextBean(AdapterDeploymentContextBean adapterDeploymentContextBean) {
-        this.adapterDeploymentContextBean = adapterDeploymentContextBean;
+    public void setKeycloakDeployment(KeycloakDeployment keycloakDeployment)
+    {
+        this.keycloakDeployment = keycloakDeployment;
     }
 
     @Required

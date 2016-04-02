@@ -16,21 +16,25 @@
 
 package org.keycloak.adapters.springsecurity.userdetails.config;
 
-import org.keycloak.adapters.springsecurity.AdapterDeploymentContextBean;
+import org.keycloak.adapters.KeycloakDeployment;
+import org.keycloak.adapters.KeycloakDeploymentBuilder;
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
 import org.keycloak.adapters.springsecurity.authentication.DirectAccessGrantAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.userdetails.authentication.DirectAccessGrantUserDetailsAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.service.DirectAccessGrantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -52,14 +56,14 @@ public class AppConfig
     protected DirectAccessGrantService directAccessGrantService;
 
     @Bean
-    AdapterDeploymentContextBean adapterDeploymentContextBean() {
-        return new AdapterDeploymentContextBean();
+    KeycloakDeployment keycloakDeployment(@Value("${keycloak.configurationFile:WEB-INF/keycloak.json}") Resource keycloakConfigFileResource) throws IOException
+    {
+        return KeycloakDeploymentBuilder.build(keycloakConfigFileResource.getInputStream());
     }
 
     @Bean
     DirectAccessGrantAuthenticationProvider directAccessGrantAuthenticationProvider() {
         DirectAccessGrantAuthenticationProvider provider = new DirectAccessGrantAuthenticationProvider();
-        provider.setAdapterDeploymentContextBean(adapterDeploymentContextBean());
         provider.setDirectAccessGrantService(directAccessGrantService);
         return provider;
     }
@@ -67,7 +71,6 @@ public class AppConfig
     @Bean
     DirectAccessGrantUserDetailsAuthenticationProvider directAccessGrantUserDetailsAuthenticationProvider() {
         DirectAccessGrantUserDetailsAuthenticationProvider provider = new DirectAccessGrantUserDetailsAuthenticationProvider();
-        provider.setAdapterDeploymentContextBean(adapterDeploymentContextBean());
         provider.setDirectAccessGrantService(directAccessGrantService);
         provider.setUserDetailsService(userDetailsService());
         return provider;

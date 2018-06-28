@@ -4,10 +4,6 @@ machine:
   java:
     version: oraclejdk7
 
-dependencies:
-  cache_directories:
-    - ../.gradle/wrapper/dists
-
 test:
   override:
     - ./gradlew test
@@ -17,9 +13,9 @@ test:
 
 deployment:
   snapshot:
-    branch: develop
+    branch: maven
     commands:
-      - ./gradlew clean
+      - mvn -Dhttps.protocols="TLSv1.2" install
   release:
     branch: master
     commands:

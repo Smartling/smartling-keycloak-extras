@@ -16,6 +16,7 @@
 
     <modules>
         <module>keycloak-spring-security-auth</module>
+        <module>keycloak-spring-security-user-details</module>
     </modules>
 
     <dependencies>

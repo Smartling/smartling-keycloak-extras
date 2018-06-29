@@ -1,25 +1,27 @@
 machine:
   environment:
     LANG: en_US.UTF-8
+    MAVEN_OPTS: -Dhttps.protocols=TLSv1.2
   java:
     version: oraclejdk7
 
 dependencies:
-  cache_directories:
-    - ../.gradle/wrapper/dists
+  override:
+    - rm -rf ~/.m2/repository/com/smartling/keycloak/
+    - mvn -U compile dependency:go-offline
 
 test:
   override:
-    - ./gradlew test
+    - mvn test
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-    - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+    - find . -type f -regex ".*/test-results/test/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
 
 deployment:
   snapshot:
-    branch: develop
+    branch: maven
     commands:
-      - ./gradlew clean
+      - mvn -s settings.xml deploy
   release:
     branch: master
     commands:

@@ -1,7 +1,7 @@
 machine:
   environment:
     LANG: en_US.UTF-8
-    MAVEN_OPTS: -Dhttps.protocols="TLSv1.2"
+    MAVEN_OPTS: -Dhttps.protocols=TLSv1.2
   java:
     version: oraclejdk7
 

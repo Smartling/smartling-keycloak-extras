@@ -1,17 +1,18 @@
 machine:
   environment:
     LANG: en_US.UTF-8
+    MAVEN_OPTS: -Dhttps.protocols="TLSv1.2"
   java:
     version: oraclejdk7
 
 dependencies:
   override:
     - rm -rf ~/.m2/repository/com/smartling/keycloak/
-    - mvn -Dhttps.protocols="TLSv1.2" -U compile dependency:go-offline
+    - mvn -U compile dependency:go-offline
 
 test:
   override:
-    - mvn -Dhttps.protocols="TLSv1.2" test
+    - mvn test
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
     - find . -type f -regex ".*/test-results/test/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
@@ -20,7 +21,7 @@ deployment:
   snapshot:
     branch: maven
     commands:
-      - mvn -Dhttps.protocols="TLSv1.2" deploy
+      - mvn --setttings settings.xml deploy
   release:
     branch: master
     commands:

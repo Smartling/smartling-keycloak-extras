@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   override:
-    - mvn -Dhttps.protocols="TLSv1.2" -U dependency:go-offline
+    - mvn -Dhttps.protocols="TLSv1.2" -U compile dependency:go-offline
 
 test:
   override:

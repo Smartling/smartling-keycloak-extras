@@ -3,6 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>keycloak-spring-security-user-details</artifactId>
     <name>Keycloak Spring Security User Details</name>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>com.smartling.keycloak.extras</groupId>
@@ -15,7 +16,41 @@
         <dependency>
             <groupId>com.smartling.keycloak.extras</groupId>
             <artifactId>keycloak-spring-security-auth</artifactId>
-            <version>0.6.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

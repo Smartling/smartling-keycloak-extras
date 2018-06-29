@@ -6,6 +6,7 @@ machine:
 
 dependencies:
   override:
+    - rm -rf ~/.m2/repository/com/smartling/keycloak/
     - mvn -Dhttps.protocols="TLSv1.2" -U compile dependency:go-offline
 
 test:
@@ -19,7 +20,6 @@ deployment:
   snapshot:
     branch: maven
     commands:
-      - mvn -Dhttps.protocols="TLSv1.2" install
       - mvn -Dhttps.protocols="TLSv1.2" deploy
   release:
     branch: master

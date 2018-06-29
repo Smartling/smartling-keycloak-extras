@@ -21,7 +21,7 @@ deployment:
   snapshot:
     branch: maven
     commands:
-      - mvn --setttings settings.xml deploy
+      - mvn -s settings.xml deploy
   release:
     branch: master
     commands:

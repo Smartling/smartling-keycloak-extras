@@ -4,6 +4,10 @@ machine:
   java:
     version: oraclejdk7
 
+dependencies:
+  override:
+    - mvn -Dhttps.protocols="TLSv1.2" -U dependency:go-offline
+
 test:
   override:
     - ./gradlew test

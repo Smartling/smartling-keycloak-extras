@@ -20,6 +20,7 @@ deployment:
     branch: maven
     commands:
       - mvn -Dhttps.protocols="TLSv1.2" install
+      - mvn -Dhttps.protocols="TLSv1.2" deploy
   release:
     branch: master
     commands:

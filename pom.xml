@@ -106,4 +106,12 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>bintray-smartling-release</id>
+            <name>smartling-release</name>
+            <url>https://api.bintray.com/maven/smartling/release/</url>
+        </repository>
+    </distributionManagement>
+
 </project>

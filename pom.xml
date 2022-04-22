@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <spring.version>3.2.6.RELEASE</spring.version>
+        <spring.version>5.3.19</spring.version>
         <spring.security.version>3.2.0.RELEASE</spring.security.version>
         <keycloak.version>1.9.0.Final</keycloak.version>
         <powermock.version>1.7.1</powermock.version>

@@ -36,9 +36,12 @@ principal to be loaded from a Spring Security user detail service.
 
 ## Using Smartling Keycloak Extras
 
-Smartling Keycloak Extras are now distributed via [JCenter]. Simply add JCenter as repository in your build.
-to your build.
+Currently this artifact is deployed to artifactory /local-ext-snapshots.
+You can deploy it with following command
+```
+export ARTIFACTORY_USER='foo'
+export ARTIFACTORY_PASSWORD='bar'
+mvn --settings settings.xml -Dhttps.protocols=TLSv1.2 clean deploy
+```
 
-[jcenter]: https://bintray.com/bintray/jcenter
 [keycloak]: http://keycloak.org
-[repo]: https://dl.bintray.com/smartling/release

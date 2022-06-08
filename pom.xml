@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.smartling.keycloak.extras</groupId>
     <artifactId>keycloak-extras-parent</artifactId>
-    <version>0.6.0-SNAPSHOT</version>
+    <version>0.7.2-SNAPSHOT</version>
     <name>Keycloak Spring Security Extras</name>
     <packaging>pom</packaging>
 
     <properties>
-        <spring.version>3.2.6.RELEASE</spring.version>
+        <spring.version>3.2.14.RELEASE</spring.version>
         <spring.security.version>3.2.0.RELEASE</spring.security.version>
         <keycloak.version>1.9.0.Final</keycloak.version>
         <powermock.version>1.7.1</powermock.version>
@@ -106,9 +106,9 @@
 
     <distributionManagement>
         <repository>
-            <id>bintray-smartling-release</id>
-            <name>smartling-release</name>
-            <url>https://api.bintray.com/maven/smartling/release/</url>
+            <id>snapshots</id>
+            <name>Artifactory local-ext-snapshots</name>
+            <url>https://artifactory.smartling.net/artifactory/local-ext-snapshots</url>
         </repository>
     </distributionManagement>
 

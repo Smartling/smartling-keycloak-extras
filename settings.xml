@@ -3,9 +3,9 @@
           xmlns='http://maven.apache.org/SETTINGS/1.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
     <servers>
         <server>
-            <id>bintray-smartling-release</id>
-            <username>${env.BINTRAY_USER}</username>
-            <password>${env.BINTRAY_API_KEY}</password>
+            <id>snapshots</id>
+            <username>${env.ARTIFACTORY_USER}</username>
+            <password>${env.ARTIFACTORY_PASSWORD}</password>
         </server>
     </servers>
 </settings>

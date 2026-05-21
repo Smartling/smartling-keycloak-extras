@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.smartling.keycloak.extras</groupId>
     <artifactId>keycloak-extras-parent</artifactId>
-    <version>0.7.2-SNAPSHOT</version>
+    <version>0.7.3-SNAPSHOT</version>
     <name>Keycloak Spring Security Extras</name>
     <packaging>pom</packaging>
 

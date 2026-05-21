@@ -109,13 +109,15 @@ public final class KeycloakSpringAdapterUtils {
         String idTokenString = accessTokenResponse.getIdToken();
         AccessToken accessToken = RSATokenVerifier
                 .verifyToken(tokenString, deployment.getRealmKey(), deployment.getRealmInfoUrl());
-        IDToken idToken;
+        IDToken idToken = null;
 
-        try {
-            JWSInput input = new JWSInput(idTokenString);
-            idToken = input.readJsonContent(IDToken.class);
-        } catch (JWSInputException e) {
-            throw new VerificationException("Unable to verify ID token", e);
+        if (idTokenString != null) {
+            try {
+                JWSInput input = new JWSInput(idTokenString);
+                idToken = input.readJsonContent(IDToken.class);
+            } catch (JWSInputException e) {
+                throw new VerificationException("Unable to verify ID token", e);
+            }
         }
 
         // FIXME: does it make sense to pass null for the token store?

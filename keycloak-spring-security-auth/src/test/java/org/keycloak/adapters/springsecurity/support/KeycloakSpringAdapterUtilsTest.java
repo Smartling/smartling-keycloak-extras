@@ -20,11 +20,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.keycloak.KeycloakPrincipal;
+import org.keycloak.RSATokenVerifier;
 import org.keycloak.adapters.AdapterUtils;
 import org.keycloak.adapters.KeycloakDeployment;
 import org.keycloak.adapters.OidcKeycloakAccount;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.account.KeycloakRole;
+import org.keycloak.representations.AccessToken;
+import org.keycloak.representations.AccessTokenResponse;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.collections.Sets;
@@ -46,7 +49,7 @@ import static org.mockito.Mockito.*;
  * Keycloak Spring adapter utility method tests.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(AdapterUtils.class)
+@PrepareForTest({AdapterUtils.class, RSATokenVerifier.class})
 public class KeycloakSpringAdapterUtilsTest {
 
     private static final String AUTHORITY_ADMIN = "admin";
@@ -100,6 +103,24 @@ public class KeycloakSpringAdapterUtilsTest {
         Collection<? extends GrantedAuthority> authorities = KeycloakSpringAdapterUtils.createGrantedAuthorities(context, grantedAuthoritiesMapper);
         assertNotNull(authorities);
         assertEquals(Sets.newSet("ROLE_USER", "ROLE_ADMIN"), AuthorityUtils.authorityListToSet(authorities));
+    }
+
+    @Test
+    public void testCreateKeycloakSecurityContextWithNullIdToken() throws Exception {
+        AccessTokenResponse response = mock(AccessTokenResponse.class);
+        AccessToken accessToken = mock(AccessToken.class);
+
+        when(response.getToken()).thenReturn("token-string");
+        when(response.getIdToken()).thenReturn(null);
+        when(response.getRefreshToken()).thenReturn("refresh-token");
+
+        PowerMockito.mockStatic(RSATokenVerifier.class);
+        when(RSATokenVerifier.verifyToken(anyString(), any(), anyString())).thenReturn(accessToken);
+
+        RefreshableKeycloakSecurityContext result = KeycloakSpringAdapterUtils.createKeycloakSecurityContext(deployment, response);
+
+        assertNotNull(result);
+        assertNull(result.getIdToken());
     }
 
 }
